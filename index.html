@@ -24,12 +24,14 @@ h2{font:600 1rem/1.2 inherit;margin:2rem 0 .5rem;padding-top:1rem;border-top:1px
 .row b{font-weight:600}.row .r{text-align:right}
 .arrow{display:inline-block;color:var(--accent)}
 .warn{color:var(--warn)}
+.map{display:block;width:100%;height:auto;border-radius:.3rem}
 button{font:inherit;color:var(--accent);background:none;border:1px solid var(--accent);border-radius:.4rem;padding:.35rem .8rem;margin-top:1.5rem}
 </style>
 </head>
 <body>
 <main id="app"><h1>Campus Point</h1><p class="mute">Loading…</p></main>
 <script>
+const MAP="https://cdip.ucsd.edu/recent/model_images/sb_channel.png";
 const DIRS=["N","NNE","NE","ENE","E","ESE","SE","SSE","S","SSW","SW","WSW","W","WNW","NW","NNW"];
 const compass=d=>d==null?"–":DIRS[Math.round(d/22.5)%16];
 const n=(v,d=1)=>v==null?"–":v.toFixed(d);
@@ -80,6 +82,8 @@ function render(d){
     h+=`<p class="lead" style="margin-top:1rem">At Campus Point: ${n(m.hs_ft)} ft at ${n(m.tp_s,0)} s, ${arrow(m.dp_deg)}from ${compass(m.dp_deg)} ${n(m.dp_deg,0)}°</p>
     <p class="mute">CDIP MOP ${d.mop.site} nowcast, ${ago(m.time)}. Significant wave height, not surf face height.</p>`;}
   h+=`<h2>Next 24 hours</h2>`+forecastHtml(d.forecast,d.mop);
+  h+=`<h2>Swell model</h2><a href="${MAP}"><img class="map" src="${MAP}?t=${Math.floor(Date.now()/600000)}" alt="CDIP swell model, Santa Barbara Channel" onerror="this.outerHTML='<p class=warn>Could not load the CDIP swell image.</p>'"></a>
+  <p class="mute">CDIP swell model for the Santa Barbara Channel (image from cdip.ucsd.edu). Tap to enlarge.</p>`;
   h+=`<h2>Wind</h2>`+windRow("UCSB / Goleta airport (KSBA)",d.wind_airport)
      +windRow("Santa Barbara harbor",d.wind_harbor)
      +windRow(`Buoy ${b?b.station:""}`,b&&b.wind);
