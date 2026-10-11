@@ -45,13 +45,24 @@ function windRow(label,w){
   <span class="r"><b>${n(w.speed_kt,0)} kt${g}</b><br>${arrow(w.dir_deg)}from ${compass(w.dir_deg)} ${n(w.dir_deg,0)}°</span></div>`;
 }
 
-function forecastHtml(f){
+const nearest=(list,iso,tolMin)=>{if(!list||!list.length)return null;const t=new Date(iso).getTime();let best=null,bd=Infinity;
+  for(const r of list){const dd=Math.abs(new Date(r.time).getTime()-t);if(dd<bd){bd=dd;best=r}}return bd<=tolMin*60000?best:null};
+
+function forecastHtml(f,mop){
   if(!f||!f.hours.length)return `<p class="warn">Forecast unavailable.</p>`;
-  const warn=(f.warnings||[]).length?`<p class="warn">Partial forecast: ${f.warnings.join("; ")}</p>`:"";
-  return f.hours.filter((_,i)=>i%3===0).map(x=>`<div class="row"><b>${day(x.time)} ${clock(x.time)}</b>
-    <span class="r">${n(x.wave_ft)} ft at ${n(x.wave_period_s,0)} s ${arrow(x.wave_dir)}${compass(x.wave_dir)}<br>
-    <span class="mute">wind ${n(x.wind_kt,0)} kt ${compass(x.wind_dir)}</span></span></div>`).join("")+warn
-    +`<p class="mute">Model forecast (Open-Meteo), 3-hour steps. Wave heights are model estimates for open water off Campus Point, not surf face height.</p>`;
+  const warns=[...(f.warnings||[]),...((mop&&mop.warnings)||[])];
+  const warn=warns.length?`<p class="warn">Partial forecast: ${warns.join("; ")}</p>`:"";
+  const haveMop=mop&&mop.forecast&&mop.forecast.length;
+  const rows=f.hours.filter((_,i)=>i%3===0).map(x=>{
+    const m=haveMop?nearest(mop.forecast,x.time,31):null, e=nearest(mop&&mop.ecmwf,x.time,91);
+    const wave=m?`${n(m.hs_ft)} ft at ${n(m.tp_s,0)} s ${arrow(m.dp_deg)}${compass(m.dp_deg)}`
+      :`${n(x.wave_ft)} ft at ${n(x.wave_period_s,0)} s ${arrow(x.wave_dir)}${compass(x.wave_dir)}`;
+    const alt=e?`<br><span class="mute">ECMWF-driven ${n(e.hs_ft)} ft at ${n(e.tp_s,0)} s</span>`:"";
+    return `<div class="row"><b>${day(x.time)} ${clock(x.time)}</b>
+    <span class="r">${wave}${alt}<br><span class="mute">wind ${n(x.wind_kt,0)} kt ${compass(x.wind_dir)}</span></span></div>`}).join("");
+  const note=haveMop?`Waves: CDIP MOP forecast at Campus Point (${mop.site}), significant wave height, not surf face height. Wind: Open-Meteo.`
+    :`Waves: Open-Meteo model estimate for open water off Campus Point, not surf face height. Wind: Open-Meteo.`;
+  return rows+warn+`<p class="mute">${note} 3-hour steps.</p>`;
 }
 
 function render(d){
@@ -65,7 +76,10 @@ function render(d){
     <p class="mute">Buoy ${b.station} (offshore, significant height), ${ago(w.time)}.<br>
     Swell ${n(s.height_ft)} ft at ${n(s.period_s,1)} s from ${s.dir||"–"}. Wind waves ${n(ww.height_ft)} ft at ${n(ww.period_s,1)} s from ${ww.dir||"–"}.</p>`;
   }else h+=`<p class="warn">Buoy data unavailable.</p>`;
-  h+=`<h2>Next 24 hours</h2>`+forecastHtml(d.forecast);
+  if(d.mop&&d.mop.nowcast){const m=d.mop.nowcast;
+    h+=`<p class="lead" style="margin-top:1rem">At Campus Point: ${n(m.hs_ft)} ft at ${n(m.tp_s,0)} s, ${arrow(m.dp_deg)}from ${compass(m.dp_deg)} ${n(m.dp_deg,0)}°</p>
+    <p class="mute">CDIP MOP ${d.mop.site} nowcast, ${ago(m.time)}. Significant wave height, not surf face height.</p>`;}
+  h+=`<h2>Next 24 hours</h2>`+forecastHtml(d.forecast,d.mop);
   h+=`<h2>Wind</h2>`+windRow("UCSB / Goleta airport (KSBA)",d.wind_airport)
      +windRow("Santa Barbara harbor",d.wind_harbor)
      +windRow(`Buoy ${b?b.station:""}`,b&&b.wind);

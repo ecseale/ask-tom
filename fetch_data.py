@@ -1,7 +1,7 @@
 """Fetch surf data for Campus Point and write data.json.
 Units: wave height ft, wave period s, wind kt, temperature F, tide ft (MLLW)."""
 import json, sys
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from zoneinfo import ZoneInfo
 import requests
 
@@ -10,6 +10,8 @@ UA = {"User-Agent": "campus-point-surf (ecseale@gmail.com)"}  # <- put your emai
 BUOY, TIDE_STATION, NWS_STATION = "46054", "9411340", "KSBA"
 M_TO_FT, MS_TO_KT, KMH_TO_KT = 3.28084, 1.94384, 0.539957
 COOPS = "https://api.tidesandcurrents.noaa.gov/api/prod/datagetter"
+MOP_ID, MOP_LAT, MOP_LON = "B0382", 34.40266, -119.84179   # CDIP MOP point at Campus Point
+MOP_BASE = "https://thredds.cdip.ucsd.edu/thredds/ncss/point/cdip/model/MOP_alongshore"
 SPOT_SEA = (34.38, -119.85)    # just offshore of Campus Point (marine model needs an ocean cell)
 SPOT_LAND = (34.41, -119.85)   # UCSB (wind model)
 
@@ -168,11 +170,60 @@ def forecast(hours=24):
     return {"source": "Open-Meteo", "hours": out, "warnings": errs}
 
 
+def fnum(s):
+    try:
+        v = float(s)
+        return v if v == v else None  # NaN -> None
+    except (TypeError, ValueError):
+        return None
+
+
+def mop_series(kind, back_h, ahead_h):
+    """CDIP MOP series for Campus Point via THREDDS NetCDF Subset (CSV).
+    kind: nowcast | forecast | ecmwf_fc. Hs in meters -> ft."""
+    fmt = "%Y-%m-%dT%H:%M:%SZ"
+    now = datetime.now(timezone.utc)
+    r = get(f"{MOP_BASE}/{MOP_ID}_{kind}.nc", params=dict(
+        var="waveHs,waveTp,waveDp", latitude=MOP_LAT, longitude=MOP_LON,
+        time_start=(now - timedelta(hours=back_h)).strftime(fmt),
+        time_end=(now + timedelta(hours=ahead_h)).strftime(fmt), accept="csv"))
+    lines = r.text.strip().splitlines()
+    cols = [c.split("[")[0] for c in lines[0].split(",")]
+    if "time" not in cols or "waveHs" not in cols:
+        raise RuntimeError("unexpected CSV: " + r.text[:200].replace("\n", " | "))
+    rows = []
+    for line in lines[1:]:
+        d = dict(zip(cols, line.split(",")))
+        hs = fnum(d.get("waveHs"))
+        if hs is None:
+            continue
+        t = datetime.fromisoformat(d["time"].replace("Z", "+00:00")).astimezone(PT)
+        rows.append({"time": t.isoformat(), "hs_ft": round(hs * M_TO_FT, 1),
+                     "tp_s": fnum(d.get("waveTp")), "dp_deg": fnum(d.get("waveDp"))})
+    return rows
+
+
+def mop():
+    out, warnings = {"site": MOP_ID, "nowcast": None, "forecast": [], "ecmwf": []}, []
+    for key, kind, back, ahead in (("nowcast", "nowcast", 6, 0),
+                                   ("forecast", "forecast", 0, 30),
+                                   ("ecmwf", "ecmwf_fc", 0, 30)):
+        try:
+            rows = mop_series(kind, back, ahead)
+            out[key] = (rows[-1] if rows else None) if key == "nowcast" else rows[:60]
+        except Exception as e:
+            warnings.append(f"{kind}: {e}")
+    if out["nowcast"] is None and not out["forecast"] and not out["ecmwf"]:
+        raise RuntimeError("; ".join(warnings) or "no data")
+    out["warnings"] = warnings
+    return out
+
+
 def main():
     result = {"updated": datetime.now(timezone.utc).isoformat(), "errors": {}}
     for name, fn in (("buoy", buoy), ("tides", tides),
                      ("wind_harbor", harbor_wind), ("wind_airport", airport_wind),
-                     ("forecast", forecast)):
+                     ("forecast", forecast), ("mop", mop)):
         try:
             result[name] = fn()
         except Exception as e:
@@ -180,7 +231,7 @@ def main():
             result["errors"][name] = f"{type(e).__name__}: {e}"
     with open("data.json", "w") as f:
         json.dump(result, f, indent=1)
-    if len(result["errors"]) == 5:
+    if len(result["errors"]) == 6:
         sys.exit(1)
 
 
