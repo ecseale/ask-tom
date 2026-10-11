@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Campus Point">
+<meta name="theme-color" content="#0e2530">
+<title>Campus Point</title>
+<style>
+:root{--bg:#eef3f1;--ink:#12252d;--mute:#5a7077;--line:#c5d3d1;--accent:#0b7a8a;--warn:#b4531a;
+  box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root{--bg:#0e2530;--ink:#e6f0ee;--mute:#8fa8ad;--line:#244451;--accent:#5cc8d4;--warn:#f0a56b}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.4 -apple-system,system-ui,"Segoe UI",sans-serif}
+main{max-width:30rem;margin:0 auto;padding:1.25rem 1.25rem 3rem}
+h1{font:600 1rem/1.2 inherit;margin:0;color:var(--mute)}
+h2{font:600 1rem/1.2 inherit;margin:2rem 0 .5rem;padding-top:1rem;border-top:1px solid var(--line)}
+.big{font:400 5rem/1 Georgia,"Times New Roman",serif;letter-spacing:-.03em;margin:.6rem 0 .1rem}
+.big small{font-size:1.6rem;letter-spacing:0;color:var(--mute)}
+.lead{font-size:1.15rem;margin:0}
+.mute{color:var(--mute);font-size:.9rem}
+.row{display:flex;justify-content:space-between;gap:1rem;padding:.55rem 0;border-bottom:1px solid var(--line)}
+.row b{font-weight:600}.row .r{text-align:right}
+.arrow{display:inline-block;color:var(--accent)}
+.warn{color:var(--warn)}
+button{font:inherit;color:var(--accent);background:none;border:1px solid var(--accent);border-radius:.4rem;padding:.35rem .8rem;margin-top:1.5rem}
+</style>
+</head>
+<body>
+<main id="app"><h1>Campus Point</h1><p class="mute">Loading…</p></main>
+<script>
+const DIRS=["N","NNE","NE","ENE","E","ESE","SE","SSE","S","SSW","SW","WSW","W","WNW","NW","NNW"];
+const compass=d=>d==null?"–":DIRS[Math.round(d/22.5)%16];
+const n=(v,d=1)=>v==null?"–":v.toFixed(d);
+const ago=iso=>{if(!iso)return"";const m=Math.max(0,Math.round((Date.now()-new Date(iso))/60000));return m<90?`${m} min ago`:`${Math.round(m/60)} h ago`};
+const clock=iso=>new Date(iso).toLocaleTimeString([],{hour:"numeric",minute:"2-digit"});
+const day=iso=>new Date(iso).toLocaleDateString([],{weekday:"short"});
+const arrow=d=>d==null?"":`<span class="arrow" style="transform:rotate(${d+180}deg)">↑</span> `;
+
+function windRow(label,w){
+  if(!w||w.speed_kt==null)return `<div class="row"><span>${label}</span><span class="mute">no data</span></div>`;
+  const g=w.gust_kt!=null?`, gusts ${n(w.gust_kt,0)}`:"";
+  return `<div class="row"><span>${label}<br><span class="mute">${ago(w.time)}</span></span>
+  <span class="r"><b>${n(w.speed_kt,0)} kt${g}</b><br>${arrow(w.dir_deg)}from ${compass(w.dir_deg)} ${n(w.dir_deg,0)}°</span></div>`;
+}
+
+function forecastHtml(f){
+  if(!f||!f.hours.length)return `<p class="warn">Forecast unavailable.</p>`;
+  const warn=(f.warnings||[]).length?`<p class="warn">Partial forecast: ${f.warnings.join("; ")}</p>`:"";
+  return f.hours.filter((_,i)=>i%3===0).map(x=>`<div class="row"><b>${day(x.time)} ${clock(x.time)}</b>
+    <span class="r">${n(x.wave_ft)} ft at ${n(x.wave_period_s,0)} s ${arrow(x.wave_dir)}${compass(x.wave_dir)}<br>
+    <span class="mute">wind ${n(x.wind_kt,0)} kt ${compass(x.wind_dir)}</span></span></div>`).join("")+warn
+    +`<p class="mute">Model forecast (Open-Meteo), 3-hour steps. Wave heights are model estimates for open water off Campus Point, not surf face height.</p>`;
+}
+
+function render(d){
+  const b=d.buoy,t=d.tides,now=Date.now(),upd=new Date(d.updated);
+  const stale=(now-upd)>3*3600e3;
+  let h=`<h1>Campus Point</h1>`;
+  if(b){
+    const w=b.wave,s=b.swell,ww=b.wind_waves;
+    h+=`<div class="big">${n(w.height_ft)}<small> ft</small></div>
+    <p class="lead">${n(w.period_s,0)} s, ${arrow(w.dir_deg)}from ${compass(w.dir_deg)} ${n(w.dir_deg,0)}°</p>
+    <p class="mute">Buoy ${b.station} (offshore, significant height), ${ago(w.time)}.<br>
+    Swell ${n(s.height_ft)} ft at ${n(s.period_s,1)} s from ${s.dir||"–"}. Wind waves ${n(ww.height_ft)} ft at ${n(ww.period_s,1)} s from ${ww.dir||"–"}.</p>`;
+  }else h+=`<p class="warn">Buoy data unavailable.</p>`;
+  h+=`<h2>Next 24 hours</h2>`+forecastHtml(d.forecast);
+  h+=`<h2>Wind</h2>`+windRow("UCSB / Goleta airport (KSBA)",d.wind_airport)
+     +windRow("Santa Barbara harbor",d.wind_harbor)
+     +windRow(`Buoy ${b?b.station:""}`,b&&b.wind);
+  h+=`<h2>Tide</h2>`;
+  if(t){
+    if(t.now)h+=`<div class="row"><span>Now<br><span class="mute">${ago(t.now.time)}</span></span><span class="r"><b>${n(t.now.ft)} ft</b></span></div>`;
+    t.events.filter(e=>new Date(e.time)>now).slice(0,4).forEach(e=>{
+      h+=`<div class="row"><span>${e.type==="H"?"High":"Low"}</span><span class="r"><b>${n(e.ft)} ft</b><br><span class="mute">${day(e.time)} ${clock(e.time)}</span></span></div>`;
+    });
+  }else h+=`<p class="warn">Tide data unavailable.</p>`;
+  h+=`<h2>Water</h2><div class="row"><span>Temperature<br><span class="mute">Buoy ${b?b.station:""}, ${ago(b&&b.water_temp_time)}</span></span><span class="r"><b>${b&&b.water_temp_f!=null?n(b.water_temp_f,0)+" °F":"–"}</b></span></div>`;
+  const errs=Object.keys(d.errors||{});
+  h+=`<p class="mute ${stale?"warn":""}">Data fetched ${ago(d.updated)}${stale?" (stale)":""}.${errs.length?" Failed: "+errs.join(", ")+".":""}</p>
+  <button onclick="load()">Refresh</button>`;
+  document.getElementById("app").innerHTML=h;
+}
+
+async function load(){
+  try{
+    const r=await fetch("data.json?"+Date.now());
+    if(!r.ok)throw new Error(r.status);
+    render(await r.json());
+  }catch(e){
+    document.getElementById("app").innerHTML=`<h1>Campus Point</h1><p class="warn">Could not load data.json (${e.message}). Run the update-data workflow once, then refresh.</p>`;
+  }
+}
+load();
+document.addEventListener("visibilitychange",()=>{if(!document.hidden)load()});
+</script>
+</body>
+</html>
