@@ -1,33 +1,33 @@
 {
- "updated": "2026-10-30T16:06:53.419150+00:00",
+ "updated": "2026-10-30T20:56:46.955675+00:00",
  "errors": {},
  "buoy": {
   "station": "46054",
   "wave": {
-   "height_ft": 4.3,
+   "height_ft": 3.9,
    "period_s": 15.0,
-   "dir_deg": 226.0,
-   "time": "2026-10-30T15:20:00+00:00"
+   "dir_deg": 215.0,
+   "time": "2026-10-30T20:20:00+00:00"
   },
   "swell": {
-   "height_ft": 4.3,
+   "height_ft": 3.6,
    "period_s": 14.8,
    "dir": "SW",
-   "time": "2026-10-30T15:10:00+00:00"
+   "time": "2026-10-30T20:10:00+00:00"
   },
   "wind_waves": {
-   "height_ft": 0.7,
-   "period_s": 3.8,
-   "dir": "W"
+   "height_ft": 1.3,
+   "period_s": 4.0,
+   "dir": "WNW"
   },
   "wind": {
-   "speed_kt": 3.9,
-   "gust_kt": 5.8,
-   "dir_deg": 250.0,
-   "time": "2026-10-30T15:30:00+00:00"
+   "speed_kt": 5.8,
+   "gust_kt": 9.7,
+   "dir_deg": 360.0,
+   "time": "2026-10-30T20:20:00+00:00"
   },
-  "water_temp_f": 72.5,
-  "water_temp_time": "2026-10-30T15:30:00+00:00"
+  "water_temp_f": 72.3,
+  "water_temp_time": "2026-10-30T20:20:00+00:00"
  },
  "tides": {
   "events": [
@@ -73,73 +73,25 @@
    }
   ],
   "now": {
-   "time": "2026-10-30T09:00:00-07:00",
-   "ft": 5.5
+   "time": "2026-10-30T13:48:00-07:00",
+   "ft": 7.1
   }
  },
  "wind_harbor": {
-  "speed_kt": 1.17,
-  "gust_kt": 1.94,
-  "dir_deg": 329.0,
-  "time": "2026-10-30T09:00:00-07:00"
+  "speed_kt": 5.44,
+  "gust_kt": 7.0,
+  "dir_deg": 107.0,
+  "time": "2026-10-30T13:48:00-07:00"
  },
  "wind_airport": {
-  "speed_kt": 0.0,
+  "speed_kt": 7.0,
   "gust_kt": null,
-  "dir_deg": 0,
-  "time": "2026-10-30T15:45:00+00:00"
+  "dir_deg": 150,
+  "time": "2026-10-30T20:35:00+00:00"
  },
  "forecast": {
   "source": "Open-Meteo",
   "hours": [
-   {
-    "time": "2026-10-30T09:00:00-07:00",
-    "wave_ft": 2.559,
-    "wave_period_s": 11.85,
-    "wave_dir": 255,
-    "swell_ft": 1.969,
-    "swell_period_s": 9.1,
-    "swell_dir": 279,
-    "wind_kt": 4.3,
-    "gust_kt": 5.1,
-    "wind_dir": 10
-   },
-   {
-    "time": "2026-10-30T10:00:00-07:00",
-    "wave_ft": 2.559,
-    "wave_period_s": 11.85,
-    "wave_dir": 255,
-    "swell_ft": 2.034,
-    "swell_period_s": 9.45,
-    "swell_dir": 279,
-    "wind_kt": 2.2,
-    "gust_kt": 8.0,
-    "wind_dir": 91
-   },
-   {
-    "time": "2026-10-30T11:00:00-07:00",
-    "wave_ft": 2.559,
-    "wave_period_s": 11.85,
-    "wave_dir": 255,
-    "swell_ft": 2.034,
-    "swell_period_s": 9.7,
-    "swell_dir": 279,
-    "wind_kt": 8.0,
-    "gust_kt": 13.0,
-    "wind_dir": 115
-   },
-   {
-    "time": "2026-10-30T12:00:00-07:00",
-    "wave_ft": 2.559,
-    "wave_period_s": 11.85,
-    "wave_dir": 255,
-    "swell_ft": 2.034,
-    "swell_period_s": 9.8,
-    "swell_dir": 279,
-    "wind_kt": 2.9,
-    "gust_kt": 9.1,
-    "wind_dir": 39
-   },
    {
     "time": "2026-10-30T13:00:00-07:00",
     "wave_ft": 2.625,
@@ -148,9 +100,9 @@
     "swell_ft": 2.034,
     "swell_period_s": 9.75,
     "swell_dir": 279,
-    "wind_kt": 6.7,
-    "gust_kt": 8.7,
-    "wind_dir": 144
+    "wind_kt": 4.0,
+    "gust_kt": 6.6,
+    "wind_dir": 90
    },
    {
     "time": "2026-10-30T14:00:00-07:00",
@@ -160,9 +112,9 @@
     "swell_ft": 2.034,
     "swell_period_s": 9.6,
     "swell_dir": 279,
-    "wind_kt": 5.5,
-    "gust_kt": 7.8,
-    "wind_dir": 108
+    "wind_kt": 7.1,
+    "gust_kt": 9.1,
+    "wind_dir": 129
    },
    {
     "time": "2026-10-30T15:00:00-07:00",
@@ -172,9 +124,9 @@
     "swell_ft": 2.034,
     "swell_period_s": 9.1,
     "swell_dir": 279,
-    "wind_kt": 4.8,
-    "gust_kt": 7.0,
-    "wind_dir": 64
+    "wind_kt": 7.3,
+    "gust_kt": 9.7,
+    "wind_dir": 126
    },
    {
     "time": "2026-10-30T16:00:00-07:00",
@@ -184,9 +136,9 @@
     "swell_ft": 2.1,
     "swell_period_s": 8.4,
     "swell_dir": 278,
-    "wind_kt": 4.2,
-    "gust_kt": 8.6,
-    "wind_dir": 98
+    "wind_kt": 7.9,
+    "gust_kt": 10.5,
+    "wind_dir": 133
    },
    {
     "time": "2026-10-30T17:00:00-07:00",
@@ -196,9 +148,9 @@
     "swell_ft": 2.1,
     "swell_period_s": 8.1,
     "swell_dir": 278,
-    "wind_kt": 4.6,
-    "gust_kt": 7.4,
-    "wind_dir": 133
+    "wind_kt": 6.4,
+    "gust_kt": 8.2,
+    "wind_dir": 163
    },
    {
     "time": "2026-10-30T18:00:00-07:00",
@@ -208,9 +160,9 @@
     "swell_ft": 2.034,
     "swell_period_s": 8.55,
     "swell_dir": 279,
-    "wind_kt": 3.7,
-    "gust_kt": 6.8,
-    "wind_dir": 108
+    "wind_kt": 3.8,
+    "gust_kt": 7.8,
+    "wind_dir": 145
    },
    {
     "time": "2026-10-30T19:00:00-07:00",
@@ -220,9 +172,9 @@
     "swell_ft": 1.969,
     "swell_period_s": 9.3,
     "swell_dir": 279,
-    "wind_kt": 4.2,
-    "gust_kt": 7.8,
-    "wind_dir": 54
+    "wind_kt": 4.6,
+    "gust_kt": 8.4,
+    "wind_dir": 61
    },
    {
     "time": "2026-10-30T20:00:00-07:00",
@@ -232,9 +184,9 @@
     "swell_ft": 1.903,
     "swell_period_s": 9.8,
     "swell_dir": 280,
-    "wind_kt": 4.2,
-    "gust_kt": 8.6,
-    "wind_dir": 39
+    "wind_kt": 5.1,
+    "gust_kt": 11.1,
+    "wind_dir": 76
    },
    {
     "time": "2026-10-30T21:00:00-07:00",
@@ -244,9 +196,9 @@
     "swell_ft": 1.969,
     "swell_period_s": 9.65,
     "swell_dir": 279,
-    "wind_kt": 4.3,
-    "gust_kt": 9.3,
-    "wind_dir": 37
+    "wind_kt": 4.6,
+    "gust_kt": 11.3,
+    "wind_dir": 61
    },
    {
     "time": "2026-10-30T22:00:00-07:00",
@@ -256,9 +208,9 @@
     "swell_ft": 1.969,
     "swell_period_s": 9.2,
     "swell_dir": 277,
-    "wind_kt": 4.5,
-    "gust_kt": 11.5,
-    "wind_dir": 45
+    "wind_kt": 5.1,
+    "gust_kt": 11.3,
+    "wind_dir": 44
    },
    {
     "time": "2026-10-30T23:00:00-07:00",
@@ -268,9 +220,9 @@
     "swell_ft": 2.034,
     "swell_period_s": 8.85,
     "swell_dir": 276,
-    "wind_kt": 5.1,
-    "gust_kt": 12.4,
-    "wind_dir": 47
+    "wind_kt": 4.7,
+    "gust_kt": 12.2,
+    "wind_dir": 57
    },
    {
     "time": "2026-10-31T00:00:00-07:00",
@@ -280,9 +232,9 @@
     "swell_ft": 1.969,
     "swell_period_s": 8.8,
     "swell_dir": 276,
-    "wind_kt": 5.1,
-    "gust_kt": 14.2,
-    "wind_dir": 53
+    "wind_kt": 4.7,
+    "gust_kt": 10.9,
+    "wind_dir": 46
    },
    {
     "time": "2026-10-31T01:00:00-07:00",
@@ -292,9 +244,9 @@
     "swell_ft": 1.969,
     "swell_period_s": 8.85,
     "swell_dir": 276,
-    "wind_kt": 4.7,
-    "gust_kt": 14.4,
-    "wind_dir": 71
+    "wind_kt": 4.9,
+    "gust_kt": 8.6,
+    "wind_dir": 31
    },
    {
     "time": "2026-10-31T02:00:00-07:00",
@@ -305,8 +257,8 @@
     "swell_period_s": 9.1,
     "swell_dir": 276,
     "wind_kt": 3.7,
-    "gust_kt": 9.1,
-    "wind_dir": 58
+    "gust_kt": 7.4,
+    "wind_dir": 349
    },
    {
     "time": "2026-10-31T03:00:00-07:00",
@@ -316,9 +268,9 @@
     "swell_ft": 1.903,
     "swell_period_s": 9.7,
     "swell_dir": 264,
-    "wind_kt": 4.7,
-    "gust_kt": 9.5,
-    "wind_dir": 52
+    "wind_kt": 4.4,
+    "gust_kt": 7.4,
+    "wind_dir": 359
    },
    {
     "time": "2026-10-31T04:00:00-07:00",
@@ -328,9 +280,9 @@
     "swell_ft": 1.837,
     "swell_period_s": 10.45,
     "swell_dir": 251,
-    "wind_kt": 2.6,
-    "gust_kt": 5.4,
-    "wind_dir": 359
+    "wind_kt": 3.3,
+    "gust_kt": 10.9,
+    "wind_dir": 41
    },
    {
     "time": "2026-10-31T05:00:00-07:00",
@@ -340,9 +292,9 @@
     "swell_ft": 1.837,
     "swell_period_s": 10.9,
     "swell_dir": 239,
-    "wind_kt": 3.2,
-    "gust_kt": 7.0,
-    "wind_dir": 357
+    "wind_kt": 2.9,
+    "gust_kt": 8.2,
+    "wind_dir": 284
    },
    {
     "time": "2026-10-31T06:00:00-07:00",
@@ -352,9 +304,9 @@
     "swell_ft": 1.772,
     "swell_period_s": 10.65,
     "swell_dir": 239,
-    "wind_kt": 3.7,
-    "gust_kt": 3.9,
-    "wind_dir": 213
+    "wind_kt": 3.9,
+    "gust_kt": 9.5,
+    "wind_dir": 146
    },
    {
     "time": "2026-10-31T07:00:00-07:00",
@@ -364,9 +316,9 @@
     "swell_ft": 1.706,
     "swell_period_s": 10.1,
     "swell_dir": 239,
-    "wind_kt": 3.0,
-    "gust_kt": 6.4,
-    "wind_dir": 296
+    "wind_kt": 5.0,
+    "gust_kt": 15.6,
+    "wind_dir": 333
    },
    {
     "time": "2026-10-31T08:00:00-07:00",
@@ -376,9 +328,57 @@
     "swell_ft": 1.64,
     "swell_period_s": 9.75,
     "swell_dir": 239,
-    "wind_kt": 2.0,
-    "gust_kt": 4.3,
-    "wind_dir": 357
+    "wind_kt": 6.7,
+    "gust_kt": 11.7,
+    "wind_dir": 66
+   },
+   {
+    "time": "2026-10-31T09:00:00-07:00",
+    "wave_ft": 2.559,
+    "wave_period_s": 11.55,
+    "wave_dir": 237,
+    "swell_ft": 1.64,
+    "swell_period_s": 9.8,
+    "swell_dir": 227,
+    "wind_kt": 2.2,
+    "gust_kt": 5.4,
+    "wind_dir": 24
+   },
+   {
+    "time": "2026-10-31T10:00:00-07:00",
+    "wave_ft": 2.625,
+    "wave_period_s": 11.55,
+    "wave_dir": 237,
+    "swell_ft": 1.575,
+    "swell_period_s": 10.0,
+    "swell_dir": 214,
+    "wind_kt": 5.1,
+    "gust_kt": 10.9,
+    "wind_dir": 293
+   },
+   {
+    "time": "2026-10-31T11:00:00-07:00",
+    "wave_ft": 2.625,
+    "wave_period_s": 11.6,
+    "wave_dir": 236,
+    "swell_ft": 1.575,
+    "swell_period_s": 10.35,
+    "swell_dir": 202,
+    "wind_kt": 3.3,
+    "gust_kt": 3.9,
+    "wind_dir": 26
+   },
+   {
+    "time": "2026-10-31T12:00:00-07:00",
+    "wave_ft": 2.625,
+    "wave_period_s": 11.7,
+    "wave_dir": 236,
+    "swell_ft": 1.509,
+    "swell_period_s": 10.75,
+    "swell_dir": 202,
+    "wind_kt": 4.6,
+    "gust_kt": 6.8,
+    "wind_dir": 313
    }
   ],
   "warnings": []
@@ -386,80 +386,74 @@
  "mop": {
   "site": "B0382",
   "nowcast": {
-   "time": "2026-10-30T07:00:00-07:00",
+   "time": "2026-10-30T12:00:00-07:00",
    "hs_ft": 0.8,
-   "tp_s": 15.384616,
-   "dp_deg": 186.32205
+   "tp_s": 14.285714,
+   "dp_deg": 187.17198
   },
   "forecast": [
-   {
-    "time": "2026-10-30T11:00:00-07:00",
-    "hs_ft": 0.6,
-    "tp_s": 15.384616,
-    "dp_deg": 187.38802
-   },
    {
     "time": "2026-10-30T14:00:00-07:00",
     "hs_ft": 0.6,
     "tp_s": 15.384616,
-    "dp_deg": 187.44212
+    "dp_deg": 187.47232
    },
    {
     "time": "2026-10-30T17:00:00-07:00",
     "hs_ft": 0.6,
     "tp_s": 15.384616,
-    "dp_deg": 187.3512
+    "dp_deg": 187.35495
    },
    {
     "time": "2026-10-30T20:00:00-07:00",
     "hs_ft": 0.6,
     "tp_s": 15.384616,
-    "dp_deg": 187.2098
+    "dp_deg": 187.2054
    },
    {
     "time": "2026-10-30T23:00:00-07:00",
     "hs_ft": 0.6,
     "tp_s": 15.384616,
-    "dp_deg": 187.01743
+    "dp_deg": 187.02881
    },
    {
     "time": "2026-10-31T02:00:00-07:00",
     "hs_ft": 0.6,
     "tp_s": 14.285714,
-    "dp_deg": 185.90938
+    "dp_deg": 186.0008
    },
    {
     "time": "2026-10-31T05:00:00-07:00",
     "hs_ft": 0.6,
     "tp_s": 14.285714,
-    "dp_deg": 185.83315
+    "dp_deg": 185.86444
    },
    {
     "time": "2026-10-31T08:00:00-07:00",
     "hs_ft": 0.6,
     "tp_s": 14.285714,
-    "dp_deg": 185.79364
+    "dp_deg": 185.74274
    },
    {
     "time": "2026-10-31T11:00:00-07:00",
     "hs_ft": 0.6,
     "tp_s": 14.285714,
-    "dp_deg": 185.56897
+    "dp_deg": 185.57417
    },
    {
     "time": "2026-10-31T14:00:00-07:00",
     "hs_ft": 0.6,
     "tp_s": 14.285714,
-    "dp_deg": 185.49329
+    "dp_deg": 185.52737
+   },
+   {
+    "time": "2026-10-31T17:00:00-07:00",
+    "hs_ft": 0.6,
+    "tp_s": 14.285714,
+    "dp_deg": 185.39127
    }
   ],
   "ecmwf": [
-   {
-    "time": "2026-10-30T11:00:00-07:00",
-    "hs_ft": 0.9,
-    "tp_s": 18.181818,
-    "dp_deg": 186.86998
-   },
    {
     "time": "2026-10-30T14:00:00-07:00",
     "hs_ft": 0.9,
@@ -513,6 +507,12 @@
     "hs_ft": 1.0,
     "tp_s": 20.0,
     "dp_deg": 186.02876
+   },
+   {
+    "time": "2026-10-31T17:00:00-07:00",
+    "hs_ft": 1.0,
+    "tp_s": 20.0,
+    "dp_deg": 185.977
    }
   ],
   "warnings": []
